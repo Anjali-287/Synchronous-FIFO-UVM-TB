@@ -25,7 +25,6 @@ class fifo_write_sequence extends uvm_sequence#(fifo_seq_item);
       assert(seq.randomize()with{seq.wr==1;});
       finish_item(seq);
       get_response(rsp);
-      $display("((((((((%0d)))))))",rsp.full);
     end while(rsp.full!=1);
     //---------------------------------------
     //Read sequence
@@ -36,7 +35,6 @@ class fifo_write_sequence extends uvm_sequence#(fifo_seq_item);
       assert(seq.randomize()with{seq.rd==1;});
       finish_item(seq);
       get_response(rsp);
-      $display("((((((((%0d)))))))",rsp.empty);
     end while(rsp.empty!=1);
     
   endtask
