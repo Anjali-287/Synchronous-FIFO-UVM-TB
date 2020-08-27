@@ -1,9 +1,8 @@
-//Fifo Scoreboard
+//FIFO Scoreboard
 
 class fifo_scoreboard extends uvm_scoreboard;
   
   `uvm_component_utils(fifo_scoreboard)
-  
   //---------------------------------------
   //Analysis import declaration
   //---------------------------------------
@@ -50,8 +49,8 @@ class fifo_scoreboard extends uvm_scoreboard;
       else begin
           `uvm_info(get_type_name(),$sformatf("------ :: FAILED MATCH:: ------"),UVM_LOW)
         `uvm_info(get_type_name(),$sformatf("Data: %0h,mem[%0d]=%0h",wr_trans.data_out,j,mem[j]),UVM_LOW)
-        j++;
     end
+        j++;
         end
     end
   endtask
