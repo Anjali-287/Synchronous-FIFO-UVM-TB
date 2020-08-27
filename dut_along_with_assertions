@@ -1,3 +1,5 @@
+// dut
+
 module fifo(
   input [7:0]data_in,
   input clk,rst,wr,rd,
