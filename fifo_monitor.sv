@@ -1,12 +1,9 @@
-//Fifo Monitor
-
-
 `define MON_IF vif.MONITOR.monitor_cb
 
 class fifo_monitor extends uvm_monitor;
   
   virtual fifo_interface vif;
-  
+  int count;
   //---------------------------------------
   //Analysis port declaration
   //---------------------------------------
@@ -41,12 +38,8 @@ class fifo_monitor extends uvm_monitor;
     forever begin
      fifo_seq_item trans;
       trans=new();
-      $display("------------------------point0--------------");
-        $display("wr=%0d,rd=%0d",`MON_IF.wr,`MON_IF.rd);
       @(posedge vif.MONITOR.clk);
-      wait(`MON_IF.wr==1 || `MON_IF.rd==1); 
-      $display("------------------------point1--------------");
-      $display("wr=%0d,rd=%0d",`MON_IF.wr,`MON_IF.rd);
+      wait(`MON_IF.wr==1 || `MON_IF.rd==1);
       begin
         if(`MON_IF.wr==1) begin
           trans.wr=`MON_IF.wr;
@@ -55,10 +48,12 @@ class fifo_monitor extends uvm_monitor;
           @(posedge vif.MONITOR.clk);
         end
         if(`MON_IF.rd==1) begin
-          $display("--------in read");
+          count++;
           trans.rd=`MON_IF.rd;
-        //@(posedge vif.MONITOR.clk);
-        //  @(posedge vif.MONITOR.clk);
+          if(count==1) begin
+            @(posedge vif.MONITOR.clk);
+            @(posedge vif.MONITOR.clk);
+          end
           trans.data_out=`MON_IF.data_out;
           trans.empty=`MON_IF.empty;
         end
