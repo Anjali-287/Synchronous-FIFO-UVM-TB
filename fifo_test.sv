@@ -39,7 +39,6 @@ class fifo_test extends uvm_test;
     phase.raise_objection( this, "Starting spi_base_seqin main phase" );
     $display("%t Starting sequence fifo_seq run_phase",$time);
     fifo_seq.start(env.agt.seq);
-    #100ns;
     phase.drop_objection( this , "Finished fifo_seq in main phase" );
   endtask
   
