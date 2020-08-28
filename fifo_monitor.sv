@@ -3,7 +3,6 @@
 class fifo_monitor extends uvm_monitor;
   
   virtual fifo_interface vif;
-  int count;
   //---------------------------------------
   //Analysis port declaration
   //---------------------------------------
@@ -38,22 +37,19 @@ class fifo_monitor extends uvm_monitor;
     forever begin
      fifo_seq_item trans;
       trans=new();
-      @(posedge vif.MONITOR.clk);
+      @(`MON_IF);
       wait(`MON_IF.wr==1 || `MON_IF.rd==1);
       begin
         if(`MON_IF.wr==1) begin
           trans.wr=`MON_IF.wr;
           trans.data_in=`MON_IF.data_in;
           trans.full=`MON_IF.full;
-          @(posedge vif.MONITOR.clk);
+          @(`MON_IF);
         end
         if(`MON_IF.rd==1) begin
-          count++;
           trans.rd=`MON_IF.rd;
-          if(count==1) begin
-            @(posedge vif.MONITOR.clk);
-            @(posedge vif.MONITOR.clk);
-          end
+          @(`MON_IF);
+          @(`MON_IF);
           trans.data_out=`MON_IF.data_out;
           trans.empty=`MON_IF.empty;
         end
