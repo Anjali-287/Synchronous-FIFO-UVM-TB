@@ -1,5 +1,3 @@
-//FIFO Scoreboard
-
 class fifo_scoreboard extends uvm_scoreboard;
   
   `uvm_component_utils(fifo_scoreboard)
@@ -41,7 +39,7 @@ class fifo_scoreboard extends uvm_scoreboard;
         mem[i]=wr_trans.data_in;
         i++;
         end
-      else if(wr_trans.rd==1) begin
+      else if(wr_trans.rd==1&&!wr_trans.empty) begin
         if(wr_trans.data_out==mem[j]) begin
         `uvm_info(get_type_name(),$sformatf("------ :: EXPECTED MATCH:: ------"),UVM_LOW)
           `uvm_info(get_type_name(),$sformatf("Data: %0h,mem[%0d]=%0h",wr_trans.data_out,j,mem[j]),UVM_LOW)
